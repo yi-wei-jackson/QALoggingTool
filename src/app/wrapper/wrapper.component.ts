@@ -3,7 +3,8 @@ import {IssueLoggingService} from '../services/issue-logging.service';
 
 @Component({
   selector: 'app-wrapper',
-  templateUrl: './wrapper.component.html'
+  templateUrl: './wrapper.component.html',
+  styleUrls: ['./wrapper.component.css']
 })
 
 /*
