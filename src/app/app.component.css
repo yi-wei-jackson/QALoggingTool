@@ -1,0 +1,8 @@
+app-wrapper {
+  height: 100vh;
+
+  /* Flex Properties */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

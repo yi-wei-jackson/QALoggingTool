@@ -1,0 +1,7 @@
+<div class="w-50">
+  <app-dyn-form [formItems]="formItems"></app-dyn-form>
+  <hr>
+  <input #newFieldInput type="text" class="form-control" placeholder="Press 'Enter' to add a new field"
+         (keydown)="onKeyDown($event)"
+  >
+</div>

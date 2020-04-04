@@ -1,0 +1,14 @@
+<div class="form-group row"
+     *ngFor="let item of formItems"
+>
+  <ng-container [ngSwitch]="item.type">
+    <label class="col-sm-3 col-form-label">
+      {{ item.label }}
+    </label>
+
+    <div class="col-sm-9">
+      <!-- Handle the dynamic form item -->
+      <app-dfi-textbox *ngSwitchCase="'textbox'" [formItem]="item" [form]="form"></app-dfi-textbox>
+    </div>
+  </ng-container>
+</div>
