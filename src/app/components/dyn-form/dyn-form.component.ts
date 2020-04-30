@@ -15,8 +15,7 @@ import {FormGroup} from '@angular/forms';
 export class DynFormComponent implements OnInit {
 
   @Input() formItems: any[];
-
-  form = new FormGroup({});
+  @Input() form: FormGroup;
 
   constructor() {
   }

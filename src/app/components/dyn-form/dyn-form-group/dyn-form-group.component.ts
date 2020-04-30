@@ -16,4 +16,8 @@ export class DynFormGroupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  deleteItem(itemId: string) {
+    // TODO(jackson): array is by reference, so if we re-assign the array then we lose the original
+  }
 }

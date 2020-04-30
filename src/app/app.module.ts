@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DynFormGroupComponent} from './components/dyn-form/dyn-form-group/dyn-form-group.component';
 import {DfiTextboxComponent} from './components/dyn-form/dyn-form-items/dfi-textbox.component';
 import {WrapperComponent} from './wrapper/wrapper.component';
+import {DfiTextAreaComponent} from './components/dyn-form/dyn-form-items/dfi-textarea.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {WrapperComponent} from './wrapper/wrapper.component';
     DynFormComponent,
     DynFormGroupComponent,
     DfiTextboxComponent,
-    WrapperComponent
+    WrapperComponent,
+    DfiTextAreaComponent
   ],
   imports: [
     BrowserModule,

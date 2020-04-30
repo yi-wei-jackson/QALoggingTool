@@ -1,10 +1,18 @@
 <div class="w-50">
-  <app-dyn-form [formItems]="formItems"></app-dyn-form>
+  <app-dyn-form [form]="form" [formItems]="formItems"></app-dyn-form>
   <hr>
   <input #newFieldInput type="text" class="form-control" placeholder="Press 'Enter' to add a new field"
          (keydown)="onKeyDown($event)"
+         [ngClass]="{ 'is-invalid': invalidNewField }"
   >
+  <span *ngIf="invalidNewField" class="invalid-feedback">Field already exists!</span>
 </div>
 <div class="w-50 h-100">
-  <textarea readonly class="w-100 h-100" placeholder="Copy & paste me!"></textarea>
+  <h3>| Copy & Paste (Click to select all):</h3>
+  <hr>
+  <textarea #cpTextArea readonly class="w-100 h-100" placeholder="Copy & paste me!"
+            [value]="cpTextAreaValue"
+            (click)="onClickCPTextArea()"
+  >
+  </textarea>
 </div>

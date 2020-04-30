@@ -1,5 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, DoCheck, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IssueLoggingService} from '../services/issue-logging.service';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-wrapper',
@@ -11,32 +12,61 @@ import {IssueLoggingService} from '../services/issue-logging.service';
 This wrapper class is needed because if all the code is written in app.component.ts, the service will keep getting refreshed, causing input
 fields to not populate properly.
  */
-export class WrapperComponent implements OnInit {
+export class WrapperComponent implements OnInit, DoCheck {
 
   @ViewChild('newFieldInput') newFieldInput: ElementRef;
+  @ViewChild('cpTextArea') cpTextArea: ElementRef;
 
+  form = new FormGroup({});
   formItems: any[];
 
-  constructor(private issueLoggingService: IssueLoggingService) {
+  cpTextAreaValue = '';
+  invalidNewField = false;
+
+  constructor(private issueLoggingService: IssueLoggingService,
+              private changeDetectorRef: ChangeDetectorRef,
+              private renderer2: Renderer2) {
   }
 
   ngOnInit(): void {
     this.formItems = this.issueLoggingService.getFormItems();
   }
 
-  onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      // Add the new item
-      const idValue = this.generateId(this.newFieldInput.nativeElement.value);
+  ngDoCheck(): void {
+    // Update copy & paste text area
+    this.cpTextAreaValue = this.getCPTextAreaValue(this.form.value);
+  }
 
-      this.formItems.push({
-        type: 'textbox',
-        id: idValue,
-        label: this.newFieldInput.nativeElement.value
-      });
+  onClickCPTextArea() {
+    this.cpTextArea.nativeElement.focus();
+    this.cpTextArea.nativeElement.select();
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (this.invalidNewField) {
+      this.invalidNewField = false;
+    }
+
+    if (event.key === 'Enter') {
+      // Verify new item does not already exist and then add the new item
+      const idValue = this.newFieldInput.nativeElement.value;
+
+      if (false === this.formItems.map((x) => x.id).includes(idValue)) {
+        this.formItems.push({
+          type: 'textarea',
+          id: idValue,
+          label: idValue,
+          resize: 'none'
+        });
+      } else {
+        this.invalidNewField = true;
+      }
 
       // Reset the value of the input field
       this.newFieldInput.nativeElement.value = '';
+
+      // Update ngDoCheck()
+      this.changeDetectorRef.detectChanges();
 
       // TODO(jackson): Transfer focus to the new field
     }
@@ -46,4 +76,15 @@ export class WrapperComponent implements OnInit {
     return camelCasedString.split(' ').join('-').toLowerCase();
   }
 
+  private getCPTextAreaValue(formValue: any): string {
+    let ret = '';
+
+    // tslint:disable-next-line:forin
+    for (const key in formValue) {
+      ret += key + ':\n';
+      ret += formValue[key] + '\n\n';
+    }
+
+    return ret.trim();
+  }
 }

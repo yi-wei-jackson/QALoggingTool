@@ -2,13 +2,15 @@
      *ngFor="let item of formItems"
 >
   <ng-container [ngSwitch]="item.type">
-    <label class="col-sm-3 col-form-label">
+    <label class="col-12 col-form-label">
       {{ item.label }}
+      <span style="color:red; cursor:pointer;" (click)="deleteItem(item.id)">X</span>
     </label>
 
-    <div class="col-sm-9">
+    <div class="col-12">
       <!-- Handle the dynamic form item -->
       <app-dfi-textbox *ngSwitchCase="'textbox'" [formItem]="item" [form]="form"></app-dfi-textbox>
+      <app-dfi-textarea *ngSwitchCase="'textarea'" [formItem]="item" [form]="form"></app-dfi-textarea>
     </div>
   </ng-container>
 </div>

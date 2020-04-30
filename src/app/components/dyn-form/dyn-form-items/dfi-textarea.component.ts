@@ -2,17 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {DfiBaseComponent} from './dfi-base.component';
 
 @Component({
-  selector: 'app-dfi-textbox',
+  selector: 'app-dfi-textarea',
   template: `
     <ng-container [formGroup]="form">
-      <input type="text" class="form-control"
-             [formControlName]="formItem.id"
+      <textarea class="form-control"
+                [formControlName]="formItem.id"
+                [ngStyle]="{ 'resize': formItem.resize }"
       >
+      </textarea>
     </ng-container>
   `
 })
 
-export class DfiTextboxComponent extends DfiBaseComponent implements OnInit {
+export class DfiTextAreaComponent extends DfiBaseComponent implements OnInit {
 
   constructor() {
     super();

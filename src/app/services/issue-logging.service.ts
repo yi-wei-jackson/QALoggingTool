@@ -10,9 +10,10 @@ export class IssueLoggingService {
   getFormItems(): any[] {
     return [
       {
-        type: 'textbox',
-        id: 'build-info',
-        label: 'Build Info'
+        type: 'textarea',
+        id: 'Build Info',
+        label: 'Build Info',
+        resize: 'none'
       }
     ];
   }
